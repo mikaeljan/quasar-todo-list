@@ -28,7 +28,14 @@
       </div>
     </q-item-section>
     <q-item-section side>
-      <q-btn flat round color="primary" icon="delete" dense />
+      <q-btn
+        @click.stop="promptToDelete(id)"
+        flat
+        round
+        color="red"
+        icon="delete"
+        dense
+      />
     </q-item-section>
   </q-item>
 </template>
@@ -38,7 +45,22 @@ import { mapActions } from "vuex";
 export default {
   props: ["task", "id"],
   methods: {
-    ...mapActions("tasks", ["updateTask"]),
+    ...mapActions("tasks", ["updateTask", "deleteTask"]),
+    promptToDelete(id) {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Would you like to turn on the wifi?",
+          ok: {
+            push: true,
+          },
+          cancel: { color: "negative" },
+          persistent: true,
+        })
+        .onOk(() => {
+          this.deleteTask(id);
+        });
+    },
   },
 };
 </script>

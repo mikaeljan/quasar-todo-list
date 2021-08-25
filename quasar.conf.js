@@ -8,7 +8,6 @@
 
 /* eslint-env node */
 const ESLintPlugin = require("eslint-webpack-plugin");
-const { QHeader, QFooter } = require("quasar");
 const { configure } = require("quasar/wrappers");
 
 module.exports = configure(function (ctx) {
@@ -92,7 +91,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ["Dialog"],
     },
 
     // animations: 'all', // --- includes all animations
