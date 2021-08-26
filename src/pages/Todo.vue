@@ -1,8 +1,17 @@
 <template>
   <q-page class="q-pa-md">
-    <q-list v-if="tasksExist" bordered separator>
-      <task v-for="(task, key) in tasks" :key="key" :task="task" :id="key" />
-    </q-list>
+    <tasks-todo bgColor="bg-orange-4" v-if="tasksTodoExist" :tasks="tasksTodo"
+      >Todo</tasks-todo
+    >
+    <no-tasks v-else />
+    <div class="q-mt-lg">
+      <tasks-todo
+        bgColor="bg-red-4"
+        v-if="tasksCompletedExist"
+        :tasks="tasksCompleted"
+        >Completed</tasks-todo
+      >
+    </div>
     <div class="absolute-bottom text-center q-mb-lg">
       <q-btn
         round
@@ -30,14 +39,18 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapGetters("tasks", ["tasks"]),
-    tasksExist() {
-      return Object.keys(this.tasks).length;
+    ...mapGetters("tasks", ["tasksTodo", "tasksCompleted"]),
+    tasksTodoExist() {
+      return Object.keys(this.tasksTodo).length;
+    },
+    tasksCompletedExist() {
+      return Object.keys(this.tasksCompleted).length;
     },
   },
   components: {
-    task: require("components/Tasks/Task.vue").default,
-    "add-task": require("components/Modals/AddTask.vue").default,
+    "add-task": require("components/Tasks/Modals/AddTask.vue").default,
+    "tasks-todo": require("../components/Tasks/Tasks.vue").default,
+    "no-tasks": require("../components/Tasks/NoTasks.vue").default,
   },
 });
 </script>
