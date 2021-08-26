@@ -15,12 +15,11 @@
           :tasks="tasksTodo"
           >Todo</tasks-todo
         >
-        <no-tasks v-if="showNoTasks" />
-        <div class="q-mt-lg">
+        <no-tasks v-if="showNoTasks && showSingleList" />
+        <div :class="{ 'q-mt-lg': showSingleList, 'q-mb-xl': true }">
           <tasks-todo
             bgColor="bg-red-4"
             v-if="tasksCompletedExist"
-            class="q-mb-xg"
             :tasks="tasksCompleted"
             >Completed</tasks-todo
           >
@@ -57,6 +56,7 @@ export default defineComponent({
 
   computed: {
     ...mapGetters("tasks", ["tasksTodo", "tasksCompleted"]),
+    ...mapGetters("settings", ["settings"]),
     ...mapState("tasks", ["search"]),
     tasksTodoExist() {
       return Object.keys(this.tasksTodo).length;
@@ -66,6 +66,9 @@ export default defineComponent({
     },
     showNoTasks() {
       return !Object.keys(this.tasksTodo).length && !this.search;
+    },
+    showSingleList() {
+      return !this.settings.showTasksInOneList;
     },
   },
   components: {
