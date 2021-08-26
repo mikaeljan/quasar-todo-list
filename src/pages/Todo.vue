@@ -1,33 +1,43 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="row q-mb-lg">
-      <search />
-      <sort />
+  <q-page>
+    <div class="q-pa-md absolute full-width full-height column">
+      <div class="row q-mb-lg">
+        <search />
+        <sort />
+      </div>
+      <p v-if="search && !tasksTodoExist && !tasksCompletedExist">
+        No search results.
+      </p>
+      <q-scroll-area class="q-scroll-area-tasks">
+        <tasks-todo
+          bgColor="bg-orange-4"
+          v-if="tasksTodoExist"
+          :tasks="tasksTodo"
+          >Todo</tasks-todo
+        >
+        <no-tasks v-if="showNoTasks" />
+        <div class="q-mt-lg">
+          <tasks-todo
+            bgColor="bg-red-4"
+            v-if="tasksCompletedExist"
+            class="q-mb-xg"
+            :tasks="tasksCompleted"
+            >Completed</tasks-todo
+          >
+        </div>
+      </q-scroll-area>
+      <div class="absolute-bottom text-center q-mb-lg no-pointer-events">
+        <q-btn
+          round
+          class="all-pointer-events"
+          color="primary"
+          size="24px"
+          icon="add"
+          @click="showAddTask = true"
+        />
+      </div>
     </div>
-    <p v-if="search && !tasksTodoExist && !tasksCompletedExist">
-      No search results.
-    </p>
-    <tasks-todo bgColor="bg-orange-4" v-if="tasksTodoExist" :tasks="tasksTodo"
-      >Todo</tasks-todo
-    >
-    <no-tasks v-if="showNoTasks" />
-    <div class="q-mt-lg">
-      <tasks-todo
-        bgColor="bg-red-4"
-        v-if="tasksCompletedExist"
-        :tasks="tasksCompleted"
-        >Completed</tasks-todo
-      >
-    </div>
-    <div class="absolute-bottom text-center q-mb-lg">
-      <q-btn
-        round
-        color="primary"
-        size="24px"
-        icon="add"
-        @click="showAddTask = true"
-      />
-    </div>
+
     <q-dialog v-model="showAddTask">
       <add-task @close="showAddTask = false" />
     </q-dialog>
@@ -67,3 +77,9 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.q-scroll-area-tasks {
+  display: flex;
+  flex-grow: 1;
+}
+</style>

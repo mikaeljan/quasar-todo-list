@@ -1,6 +1,7 @@
 <template>
   <div class="row q-mb-sm">
     <q-input
+      @focus="selectAll($event)"
       autofocus
       clearable
       outlined
@@ -16,5 +17,10 @@
 <script>
 export default {
   props: ["name"],
+  methods: {
+    selectAll(event) {
+      event.target.select();
+    },
+  },
 };
 </script>

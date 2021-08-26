@@ -1,5 +1,12 @@
 <template>
-  <q-input class="col" v-model="searchField" label="Search" outlined>
+  <q-input
+    @keyup.esc="clear"
+    @focus="selectAll($event)"
+    class="col"
+    v-model="searchField"
+    label="Search"
+    outlined
+  >
     <template v-slot:append>
       <q-icon
         v-if="searchField !== ''"
@@ -29,6 +36,9 @@ export default {
     ...mapActions("tasks", ["setSearch"]),
     clear() {
       this.setSearch("");
+    },
+    selectAll(event) {
+      event.target.select();
     },
   },
 };
