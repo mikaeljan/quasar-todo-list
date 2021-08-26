@@ -19,4 +19,6 @@ export default {
       dueTime: "18:30",
     },
   },
+  search: "",
+  sort: "name",
 };

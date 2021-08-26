@@ -8,4 +8,10 @@ export default {
   deleteTask(state, payload) {
     delete state.tasks[payload];
   },
+  setSearch(state, payload) {
+    state.search = payload;
+  },
+  setSort(state, payload) {
+    state.sort = payload;
+  },
 };

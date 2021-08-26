@@ -14,4 +14,10 @@ export default {
   deleteTask(context, payload) {
     context.commit("deleteTask", payload);
   },
+  setSearch(context, payload) {
+    context.commit("setSearch", payload);
+  },
+  setSort(context, payload) {
+    context.commit("setSort", payload);
+  },
 };

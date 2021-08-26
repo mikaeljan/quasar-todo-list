@@ -1,9 +1,16 @@
 <template>
   <q-page class="q-pa-md">
+    <div class="row q-mb-lg">
+      <search />
+      <sort />
+    </div>
+    <p v-if="search && !tasksTodoExist && !tasksCompletedExist">
+      No search results.
+    </p>
     <tasks-todo bgColor="bg-orange-4" v-if="tasksTodoExist" :tasks="tasksTodo"
       >Todo</tasks-todo
     >
-    <no-tasks v-else />
+    <no-tasks v-if="showNoTasks" />
     <div class="q-mt-lg">
       <tasks-todo
         bgColor="bg-red-4"
@@ -29,7 +36,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default defineComponent({
   name: "PageTodo",
   data() {
@@ -40,17 +47,23 @@ export default defineComponent({
 
   computed: {
     ...mapGetters("tasks", ["tasksTodo", "tasksCompleted"]),
+    ...mapState("tasks", ["search"]),
     tasksTodoExist() {
       return Object.keys(this.tasksTodo).length;
     },
     tasksCompletedExist() {
       return Object.keys(this.tasksCompleted).length;
     },
+    showNoTasks() {
+      return !Object.keys(this.tasksTodo).length && !this.search;
+    },
   },
   components: {
     "add-task": require("components/Tasks/Modals/AddTask.vue").default,
     "tasks-todo": require("../components/Tasks/Tasks.vue").default,
     "no-tasks": require("../components/Tasks/NoTasks.vue").default,
+    search: require("../components/Tools/Search.vue").default,
+    Sort: require("../components/Tools/Sort.vue").default,
   },
 });
 </script>
