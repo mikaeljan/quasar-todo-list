@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page padding>
     <q-list class="q-mb-md" bordered padding>
       <q-item-label header>Settings</q-item-label>
       <q-item tag="label" v-ripple>
@@ -19,6 +19,7 @@
         </q-item-section>
       </q-item>
     </q-list>
+
     <q-list bordered padding>
       <q-item-label header>More</q-item-label>
 

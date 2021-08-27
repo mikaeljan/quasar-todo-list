@@ -11,6 +11,14 @@
           @click="toggleLeftDrawer"
         />
 
+        <q-btn
+          to="/auth"
+          flat
+          class="absolute-right"
+          icon="account_circle"
+          label="Login"
+        />
+
         <q-toolbar-title class="absolute-center">
           Awesome Todo
         </q-toolbar-title>
