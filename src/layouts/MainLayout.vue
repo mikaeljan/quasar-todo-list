@@ -12,11 +12,20 @@
         />
 
         <q-btn
+          v-if="!loggedIn"
           to="/auth"
           flat
           class="absolute-right"
           icon="account_circle"
           label="Login"
+        />
+        <q-btn
+          v-else
+          flat
+          class="absolute-right"
+          icon="account_circle"
+          label="Logout"
+          @click="logoutUser"
         />
 
         <q-toolbar-title class="absolute-center">
@@ -74,36 +83,38 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
-
-export default defineComponent({
+import { mapState, mapActions } from "vuex";
+export default {
   name: "MainLayout",
-
-  setup() {
-    const leftDrawerOpen = ref(false);
-    const navs = [
-      {
-        id: "1",
-        label: "Todo",
-        icon: "list",
-        to: "/",
-      },
-      {
-        id: "2",
-        label: "Settings",
-        icon: "settings",
-        to: "/settings",
-      },
-    ];
+  computed: {
+    ...mapState("auth", ["loggedIn"]),
+  },
+  data() {
     return {
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-      navs,
+      leftDrawerOpen: false,
+      navs: [
+        {
+          id: "1",
+          label: "Todo",
+          icon: "list",
+          to: "/",
+        },
+        {
+          id: "2",
+          label: "Settings",
+          icon: "settings",
+          to: "/settings",
+        },
+      ],
     };
   },
-});
+  methods: {
+    ...mapActions("auth", ["logoutUser"]),
+    toggleLeftDrawer() {
+      this.leftDrawerOpen = !this.leftDrawerOpen;
+    },
+  },
+};
 </script>
 <style lang="scss">
 .q-drawer {

@@ -1,4 +1,6 @@
 import { uid } from "quasar";
+import { db, firebaseAuth } from "src/boot/firebase";
+import { onValue, ref } from "firebase/database";
 
 export default {
   addTask(context, payload) {
@@ -7,7 +9,13 @@ export default {
       task: payload,
     });
   },
-
+  dbReadData() {
+    const userId = firebaseAuth.currentUser.uid;
+    const userTasks = ref(db, "tasks/" + userId);
+    onValue(userTasks, (snapshot) => {
+      console.log(snapshot);
+    });
+  },
   updateTask(context, payload) {
     context.commit("updateTask", payload);
   },
